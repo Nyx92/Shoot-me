@@ -4,7 +4,11 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="//fonts.googleapis.com/css?family=Play"
+    />
     <!-- Bootstrap CSS -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
@@ -15,17 +19,34 @@
     <title>Game</title>
   </head>
   <body>
+    <!-- player's current score -->
     <div class="score"><span>Score:</span><span id="scoreEl"> 0</span></div>
-    <!-- 
-    <div id="modal">
+
+    <div class="modal">
       <div id="background">
-        <h1>0</h1>
+        <h1 class="total-score">0</h1>
         <p>Points</p>
-        <div>
-          <button>Start Game</button>
-        </div>
+        <button id="startGamebtn" class="start-game-btn">Start Game</button>
       </div>
-    </div> -->
+    </div>
+
+    <!-- leaderboard button -->
+    <div class="leaderboard"><button>Leaderboard</button></div>
+    <!-- leaderboard -->
+    <div class="modal-leaderboard">
+      <div id="background-leaderboard">
+        <table></table>
+        <button id="close-leaderboard-btn">x</button>
+      </div>
+    </div>
+
+    <div class="shop">
+      <div id="background">
+        <h1 class="total-score">0</h1>
+        <p>Points</p>
+        <button id="startGamebtn" class="start-game-btn">Start Game</button>
+      </div>
+    </div>
 
     <canvas class="canvas"> </canvas>
     <script

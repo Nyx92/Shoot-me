@@ -1,0 +1,170 @@
+body {
+  margin: none;
+  background-color: black;
+  height: 1200px;
+  padding: none;
+  font-family: Play;
+}
+
+.login-signup-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.login-brand {
+  color: white;
+  text-align: center;
+}
+
+.login-form-container {
+  border-style: solid;
+  border-color: white;
+  border-radius: 5px;
+  background-color: black;
+  padding: 80px;
+  text-align: center;
+  width: 400px;
+  /* display: flex;
+  justify-content: center; */
+}
+
+.login-button {
+  display: block;
+  margin-top: 20px;
+  margin-bottom: 15px;
+  margin: auto;
+  width: 63%;
+  padding: 10px;
+  border-radius: 5px;
+  font: inherit;
+}
+
+.forgot-password {
+  color: white;
+  padding-top: 10px;
+  padding-bottom: 25px;
+  /* has to be a div for a border */
+  border-bottom: solid white;
+}
+
+.forgot-password a {
+  color: white;
+  text-decoration: none;
+}
+
+.create-account-button {
+  display: block;
+  width: 50%;
+  padding: 10px;
+  border-radius: 5px;
+  font: inherit;
+  /* margin auto first to center horizontally */
+  margin: auto;
+  margin-top: 30px;
+}
+
+.login-signup-page {
+  position: relative;
+}
+
+.sign-up-form {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  position: absolute;
+  background: rgb(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: none;
+}
+
+.sign-up-form-container {
+  text-align: center;
+  width: 50%;
+  background: #060b23;
+  color: white;
+  border-radius: 4px;
+  position: relative;
+}
+
+#password-signup,
+#username-signup,
+#username,
+#email,
+#password {
+  display: block;
+  /* height of each field */
+  padding: 10px;
+  padding-right: 50px;
+  padding-left: 50px;
+  margin: auto;
+  /* adding space between each field */
+  margin-bottom: 5px;
+  text-align: center;
+  border: solid #e1e5ee;
+  border-radius: 5px;
+  font-family: inherit;
+  background: none;
+  color: white;
+}
+
+#password-signup:hover,
+#username-signup:hover,
+#username:hover,
+#email:hover,
+#password:hover {
+  border: solid #adffff;
+}
+
+.close {
+  position: absolute;
+  top: 0;
+  right: 14px;
+  font-size: 42px;
+  transform: rotate(45deg);
+  cursor: pointer;
+}
+
+.submit-button {
+  display: block;
+  width: 10%;
+  padding: 10px;
+  border-radius: 5px;
+  font: inherit;
+  /* margin auto first to center horizontally */
+  margin: auto;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+/* error-login page */
+
+.error-login-message {
+  color: red;
+  width: 100%;
+}
+
+.find-account {
+  color: red;
+}
+
+/* .wrong-user {
+  display: none;
+  color: red;
+}
+
+.show-wrong-user {
+  display: flex;
+}
+
+.wrong-password {
+  display: none;
+  color: red;
+}
+
+.show-wrong-password {
+  display: flex;
+} */

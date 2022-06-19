@@ -1,6 +1,11 @@
+// Model Index File to Make Models Accessible in App
+// Initialise and export all the models we define in a single module (index.mjs).
+// This makes it easy to access models from different modules within our application
 import { Sequelize } from 'sequelize';
 import url from 'url';
 import allConfig from '../config/config.js';
+import initUserModel from './user.mjs';
+import initGameStateModel from './user.mjs';
 
 const env = process.env.NODE_ENV || 'development';
 const config = allConfig[env];
@@ -27,6 +32,15 @@ if (env === 'production') {
 else {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
+
+// here we are putting initUserModel from user.mmjs into the object "db"
+db.User = initUserModel(sequelize, Sequelize.DataTypes);
+db.Gamestate = initGameStateModel(sequelize, Sequelize.DataTypes);
+
+// The following 2 lines enable Sequelize to recognise the 1-M relationship
+// between Item and Category models, providing the mixin association methods.
+db.Gamestate.belongsTo(db.User);
+db.User.hasMany(db.Gamestate);
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

@@ -1,5 +1,9 @@
 import './styles.scss';
 
+// rules: {
+// 'max-classes-per-file': 'off',
+// }
+
 // #### GLOBAL VARIABLES ####
 // canvas creation
 const canvas = document.querySelector('canvas');
@@ -10,18 +14,20 @@ canvas.width = innerWidth;
 // set canvas height to match screen size
 canvas.height = innerHeight;
 // global array known as projectiles
-const projectiles = [];
+let projectiles = [];
 // global array known as enemies
-const enemies = [];
+let enemies = [];
 // global array known as players
-const players = [];
+let players = [];
 // global array known as particles
-const particles = [];
+let particles = [];
 // global array to store id per frame
 let animationId;
 // global const to store speed of projectiles, default, 4
 const speedOfProjectiles = 4;
 const scoreEl = document.querySelector('#scoreEl');
+const modalScoreEl = document.querySelector('.total-score');
+const startGameBtn = document.querySelector('#startGamebtn');
 let score = 0;
 
 // function to draw player
@@ -269,9 +275,9 @@ const animate = function () {
         // freeze animation
         cancelAnimationFrame(animationId);
         // bring up scoreboard modal
-        const modal = document.getElementById('modal');
+        const modal = document.querySelector('.modal');
         // add class
-        modal.classList.add('show-modal');
+        modal.classList.remove('remove-modal');
       }
     });
 
@@ -284,6 +290,8 @@ const animate = function () {
         // increase our score
         score += 100;
         scoreEl.innerHTML = score;
+        // update modal scoreboard
+        modalScoreEl.innerHTML = score;
         // create particles upon collision
         for (let i = 0; i < enemy.radius * 2; i++) {
           createParticles(projectile.x, projectile.y, Math.random() * 2, enemy.color, { x: (Math.random() - 0.5) * powerOfExplosions, y: (Math.random() - 0.5) * powerOfExplosions });
@@ -316,6 +324,16 @@ const animate = function () {
   });
 };
 
+const restart = function () {
+  projectiles = [];
+  enemies = [];
+  players = [];
+  particles = [];
+  score = 0;
+  scoreEl.innerHTML = 0;
+  modalScoreEl.innerHTML = 0;
+};
+
 // main game
 const main = function () {
   // create player right in the middle of the canvas
@@ -334,4 +352,8 @@ const main = function () {
   animate();
 };
 
-main();
+startGameBtn.addEventListener('click', () => {
+  document.querySelector('.modal').classList.add('remove-modal');
+  restart();
+  main();
+});

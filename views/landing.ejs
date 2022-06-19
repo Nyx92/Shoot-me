@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Play" />
+  </head>
+  <body>
+
+<!-- login page content -->
+<div class = "login-signup-page">
+
+  <div class="login-container">
+  <!-- login brand content -->
+  <div class = "login-brand">
+    <h1>Shoot me!</h1>
+  </div>
+  <!-- End of login brand content -->
+
+  <!-- login form container-->
+  <div class = "login-form-container">
+    <form action="/login" method="POST">
+      <label for="username"></label>
+      <input type="text" id="username" name="username" placeholder="Username*"/>
+      <label for="password"></label>
+      <input type="password" id="password" name="password" minlength="8" placeholder="Password*"/>
+      <input type="submit" value="Login" class ="login-button" />
+      <div class="wrong-user"> Wrong Username! </div>
+      <div class="wrong-password"> Wrong Password! </div>
+    </form>
+      <div class = "forgot-password"><a href="">Forgotten password?</a></div>
+      <button class="create-account-button">Create New Account</button>
+  </div>
+  <!-- End of login-form-container -->
+</div>  
+<!-- End of login-page -->
+</div>
+<!-- End of login-container -->
+
+  <div class= "sign-up-form">
+    <div class = "sign-up-form-container">
+      <div class="close">+</div>
+    <div> <h1>CREATE YOUR ACCOUNT</h1> <p>Shoot me!</p></div>
+    <form action="/sign-up" method="POST">
+      <label for="username"></label>
+      <input type="text" id="username-signup" name="username" placeholder="Username*"/>
+      <label for="email"></label>
+      <input type="email" id="email" name="email" placeholder="Email*"/>
+      <label for="password"></label>
+      <input type="password" id="password-signup" name="password" minlength="8" placeholder="Password*"/>
+      <input class="submit-button" type="submit" value="Submit" />
+    </form>
+    </div>
+    <!-- end of sign-up-form-container -->
+  </div>
+  <!-- end of sign-up-form -->
+
+
+    <!-- end of login-signup-page -->
+  </div>
+  </body>
+
+  <script>
+    document.querySelector(".create-account-button").addEventListener('click', function(){
+      document.querySelector('.sign-up-form').style.display = "flex";
+    })
+
+     document.querySelector(".close").addEventListener('click', function(){
+      document.querySelector('.sign-up-form').style.display = "none";
+    })
+
+  </script>
+
+</html>
