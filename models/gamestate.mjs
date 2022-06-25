@@ -1,6 +1,6 @@
 export default function initGameStateModel(sequelize, DataTypes) {
   return sequelize.define(
-    'item',
+    'gamestate',
     {
       id: {
         allowNull: false,
@@ -8,14 +8,14 @@ export default function initGameStateModel(sequelize, DataTypes) {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      name: {
-        type: DataTypes.STRING,
-      },
-      categoryId: {
+      score: {
         type: DataTypes.INTEGER,
-        // This links the categoryId column to the id column in the categories table
+      },
+      userId: {
+        type: DataTypes.INTEGER,
+        // This links the userId column to the id column in the gamestates table
         references: {
-          model: 'categories',
+          model: 'users',
           key: 'id',
         },
       },

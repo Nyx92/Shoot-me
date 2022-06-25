@@ -5,7 +5,7 @@ import { Sequelize } from 'sequelize';
 import url from 'url';
 import allConfig from '../config/config.js';
 import initUserModel from './user.mjs';
-import initGameStateModel from './user.mjs';
+import initGameStateModel from './gamestate.mjs';
 
 const env = process.env.NODE_ENV || 'development';
 const config = allConfig[env];

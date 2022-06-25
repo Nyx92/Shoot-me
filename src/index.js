@@ -1,9 +1,11 @@
 import './styles.scss';
+import { leaderboardCreator } from './leaderboard.js';
 
 // rules: {
 // 'max-classes-per-file': 'off',
 // }
 
+leaderboardCreator();
 // #### GLOBAL VARIABLES ####
 // canvas creation
 const canvas = document.querySelector('canvas');
@@ -29,8 +31,10 @@ const scoreEl = document.querySelector('#scoreEl');
 const modalScoreEl = document.querySelector('.total-score');
 const startGameBtn = document.querySelector('#startGamebtn');
 let score = 0;
+// gameMode to signal if game has ended, so code knows when to update leaderboard
+const gameMode = 'not end';
 
-// function to draw player
+// // function to draw player
 const createPlayer = function (x, y, radius, color) {
   class Player {
     constructor(x, y, radius, color) {
@@ -230,7 +234,7 @@ const createParticles = function (x, y, radius, color, velocity) {
 // function to animate all elements
 const animate = function () {
   // animation function refreshes per frame
-  // animationId stores the id of each of the frame as an digit
+  // animationId stores the id of each of the frame as a digit
   animationId = requestAnimationFrame(animate);
   // defining the background of the game
   c.fillStyle = 'rgba(0, 0, 0, 0.1)';
@@ -264,7 +268,7 @@ const animate = function () {
     }
   });
 
-  // references the global array known as enemies to draw enemiies
+  // references the global array known as enemies to draw enemies
   enemies.forEach((enemy, index) => {
     // draw enemy
     enemy.update();
@@ -276,7 +280,7 @@ const animate = function () {
         cancelAnimationFrame(animationId);
         // bring up scoreboard modal
         const modal = document.querySelector('.modal');
-        // add class
+        // add class to show modal
         modal.classList.remove('remove-modal');
       }
     });
@@ -321,9 +325,11 @@ const animate = function () {
         }
       }
     });
+  // }
   });
 };
 
+// restart function
 const restart = function () {
   projectiles = [];
   enemies = [];
@@ -352,8 +358,81 @@ const main = function () {
   animate();
 };
 
+// const leaderBoardBtn = document.querySelector('#leaderboardBtn');
+// leaderBoardBtn.addEventListener('click', () => {
+//   // get scores from database and outputs it in a table via a route
+//   axios
+//     .get('/leaderboard')
+//     .then((response) => {
+//       // handle success
+//       console.log(response);
+//       const leaderboardDiv = document.querySelector('.leaderboard');
+//       // build leaderboard modal
+//       const div = document.createElement('div');
+//       // give it an id
+//       div.setAttribute('id', 'leaderboard-div');
+//       // create table
+//       const table = document.createElement('table');
+//       // give it an id
+//       table.setAttribute('id', 'leaderboard-table');
+//       // create first row for table headers
+//       const firstRow = document.createElement('tr');
+//       // create headers
+//       const firstHeader = document.createElement('th');
+//       const secondHeader = document.createElement('th');
+//       const thirdHeader = document.createElement('th');
+//       firstHeader.innerHTML = '&#11088';
+//       secondHeader.innerHTML = 'NAME';
+//       thirdHeader.innerHTML = 'SCORE';
+//       firstRow.appendChild(firstHeader);
+//       firstRow.appendChild(secondHeader);
+//       firstRow.appendChild(thirdHeader);
+//       // append first row (i.e., headers) into table
+//       table.appendChild(firstRow);
+//       // create rows for scores
+//       for (let i = 0; i < 10; i++) {
+//         const rows = document.createElement('tr');
+//         const elementRank = document.createElement('td');
+//         const elementName = document.createElement('td');
+//         const elementScore = document.createElement('td');
+//         elementRank.innerHTML = `${i + 1}`;
+//         elementName.innerHTML = response.data.scoreList[i].userId;
+//         elementScore.innerHTML = response.data.scoreList[i].score;
+//         rows.appendChild(elementRank);
+//         rows.appendChild(elementName);
+//         rows.appendChild(elementScore);
+//         table.appendChild(rows);
+//       }
+//       // append table in div
+//       div.appendChild(table);
+//       leaderboardDiv.appendChild(div);
+//       div.style.color = 'white';
+//     })
+//     .catch((error) => {
+//       // handle error
+//       console.log(error);
+//     });
+// });
+
 startGameBtn.addEventListener('click', () => {
   document.querySelector('.modal').classList.add('remove-modal');
+  if (score !== 0) {
+    const data = {
+      finalScore: score,
+
+    };
+    // updates user's score in the database
+    axios
+      .post('/score', data)
+      .then((response) => {
+      // handle success
+        console.log(response);
+      })
+      .catch((error) => {
+      // handle error
+        console.log(error);
+      });
+  }
   restart();
   main();
 });

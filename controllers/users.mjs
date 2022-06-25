@@ -57,7 +57,9 @@ export default function initUsersController(db) {
       // check if password is correct
       if (foundUsername.dataValues.password === hashedPassword) {
         // account is verified, add a cookie and go on to game
+        const userId = foundUsername.dataValues.id;
         console.log('cookies are set');
+        response.cookie('userId', userId);
         response.cookie('loggedInHash', hashedUser);
         response.cookie('username', usernameInput);
         if (request.cookies.loggedInHash && request.cookies.username) {
