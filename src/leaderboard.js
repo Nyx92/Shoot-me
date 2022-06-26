@@ -46,7 +46,7 @@ export const leaderboardCreator = function () {
             const elementScore = document.createElement('td');
             elementScore.style.border = '1px solid white';
             elementRank.innerHTML = `${i + 1}`;
-            elementName.innerHTML = response.data.scoreList[i].userId;
+            elementName.innerHTML = response.data.scoreList[i].user.username;
             elementScore.innerHTML = response.data.scoreList[i].score;
             rows.appendChild(elementRank);
             rows.appendChild(elementName);

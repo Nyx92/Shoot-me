@@ -22,6 +22,8 @@ export default function initGamestateController(db) {
   const leaderboard = async (request, response) => {
     try {
       const scoreList = await db.Gamestate.findAll({
+        // eager loading
+        include: db.User,
         limit: 10,
         order: [['score', 'DESC']],
       });
