@@ -358,62 +358,6 @@ const main = function () {
   animate();
 };
 
-// const leaderBoardBtn = document.querySelector('#leaderboardBtn');
-// leaderBoardBtn.addEventListener('click', () => {
-//   // get scores from database and outputs it in a table via a route
-//   axios
-//     .get('/leaderboard')
-//     .then((response) => {
-//       // handle success
-//       console.log(response);
-//       const leaderboardDiv = document.querySelector('.leaderboard');
-//       // build leaderboard modal
-//       const div = document.createElement('div');
-//       // give it an id
-//       div.setAttribute('id', 'leaderboard-div');
-//       // create table
-//       const table = document.createElement('table');
-//       // give it an id
-//       table.setAttribute('id', 'leaderboard-table');
-//       // create first row for table headers
-//       const firstRow = document.createElement('tr');
-//       // create headers
-//       const firstHeader = document.createElement('th');
-//       const secondHeader = document.createElement('th');
-//       const thirdHeader = document.createElement('th');
-//       firstHeader.innerHTML = '&#11088';
-//       secondHeader.innerHTML = 'NAME';
-//       thirdHeader.innerHTML = 'SCORE';
-//       firstRow.appendChild(firstHeader);
-//       firstRow.appendChild(secondHeader);
-//       firstRow.appendChild(thirdHeader);
-//       // append first row (i.e., headers) into table
-//       table.appendChild(firstRow);
-//       // create rows for scores
-//       for (let i = 0; i < 10; i++) {
-//         const rows = document.createElement('tr');
-//         const elementRank = document.createElement('td');
-//         const elementName = document.createElement('td');
-//         const elementScore = document.createElement('td');
-//         elementRank.innerHTML = `${i + 1}`;
-//         elementName.innerHTML = response.data.scoreList[i].userId;
-//         elementScore.innerHTML = response.data.scoreList[i].score;
-//         rows.appendChild(elementRank);
-//         rows.appendChild(elementName);
-//         rows.appendChild(elementScore);
-//         table.appendChild(rows);
-//       }
-//       // append table in div
-//       div.appendChild(table);
-//       leaderboardDiv.appendChild(div);
-//       div.style.color = 'white';
-//     })
-//     .catch((error) => {
-//       // handle error
-//       console.log(error);
-//     });
-// });
-
 startGameBtn.addEventListener('click', () => {
   document.querySelector('.modal').classList.add('remove-modal');
   if (score !== 0) {

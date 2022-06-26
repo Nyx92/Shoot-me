@@ -42,6 +42,10 @@ export default function initUsersController(db) {
   // this function authenticates user's particulars in the database
   const login = async (request, response) => {
     request.isUserLoggedIn = false;
+    console.log('do you see this');
+    console.log(request.body.username);
+    console.log(request.body.password);
+    console.log('do you see this 2');
     const usernameInput = request.body.username;
     const passwordInput = request.body.password;
     const hashedUser = getHash(usernameInput);
@@ -65,19 +69,14 @@ export default function initUsersController(db) {
         if (request.cookies.loggedInHash && request.cookies.username) {
           console.log('cookies exist');
         }
-        response.redirect('/game');
+        response.status(200).send({ success_message: 'success!' });
       } else {
         // let them know password is wrong
-        // Is there a way to not use an additional ejs? ### I can't access document here.
-        response.status(403).render('error-login');
-        // document.querySelector('.wrong-password').addClassList('.show-wrong-password');
-        // response.status(403).render('error-login');
+        response.status(403).send({ error_message: 'error-password' });
       }
     } else {
-      // let them know that username don't exist
-      // Is there a way to not use an additional ejs? ### I can't access document here.
-      response.status(403).render('error-login');
-      // document.querySelector('.wrong-user').addClassList('.show-wrong-user');
+      // let them know username is wrong
+      response.status(403).send({ error_message: 'error-login' });
     }
   };
 
@@ -89,6 +88,7 @@ export default function initUsersController(db) {
         response.sendFile(resolve('dist', 'main.html'));
       }
     } else {
+      // lack the requisite cookies, redirect to login page
       console.log('failed login');
       response.redirect('/');
     }
