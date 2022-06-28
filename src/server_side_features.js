@@ -80,6 +80,7 @@ export const highscoreCreator = function () {
       // handle success
       console.log(response);
       const highscoreDiv = document.querySelector('.highscore');
+      highscoreDiv.innerHTML = '';
       highscoreDiv.innerHTML = 'HighScore :';
       highscoreDiv.innerHTML += ` ${response.data.highScore.score}`;
     })
@@ -92,7 +93,7 @@ export const highscoreCreator = function () {
 // export const saveGame = function () {
 //   const saveGameBtn = document.querySelector('#save-game-btn');
 //   saveGameBtn.addEventListener('click', () => {
-//     // once clicked, stores
+//     // once clicked, sends data back to table
 
 //       axios
 //         .get('/leaderboard')

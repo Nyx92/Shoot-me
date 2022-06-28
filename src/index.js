@@ -361,7 +361,6 @@ startGameBtn.addEventListener('click', () => {
   if (score !== 0) {
     const data = {
       finalScore: score,
-
     };
     // updates user's score in the database
     axios
@@ -369,6 +368,7 @@ startGameBtn.addEventListener('click', () => {
       .then((response) => {
       // handle success
         console.log(response);
+        highscoreCreator();
       })
       .catch((error) => {
       // handle error

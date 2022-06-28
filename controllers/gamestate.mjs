@@ -12,7 +12,7 @@ export default function initGamestateController(db) {
         // created_at: new Date(),
         // updated_at: new Date(),
       });
-      // response.redirect('/home');
+      response.send({ data: 'success' });
     } catch (error) {
       console.log(error);
     }
