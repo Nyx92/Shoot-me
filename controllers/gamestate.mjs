@@ -33,9 +33,26 @@ export default function initGamestateController(db) {
     }
   };
 
+  // this function calls the highscore data from the database
+  const highscore = async (request, response) => {
+    const userIdCookie = request.cookies.userId;
+    try {
+      const highScore = await db.Gamestate.findOne({
+        where: {
+          userId: userIdCookie,
+        },
+        include: db.User,
+        order: [['score', 'DESC']],
+      });
+      response.send({ highScore });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   // return all methods we define in an object
   // refer to the routes file above to see this used
   return {
-    score, leaderboard,
+    score, leaderboard, highscore,
   };
 }

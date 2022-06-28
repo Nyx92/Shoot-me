@@ -1,10 +1,10 @@
 import './styles.scss';
-import { leaderboardCreator } from './leaderboard.js';
+import { leaderboardCreator, highscoreCreator } from './server_side_features.js';
 
 // rules: {
 // 'max-classes-per-file': 'off',
 // }
-
+highscoreCreator();
 leaderboardCreator();
 // #### GLOBAL VARIABLES ####
 // canvas creation
@@ -31,8 +31,6 @@ const scoreEl = document.querySelector('#scoreEl');
 const modalScoreEl = document.querySelector('.total-score');
 const startGameBtn = document.querySelector('#startGamebtn');
 let score = 0;
-// gameMode to signal if game has ended, so code knows when to update leaderboard
-const gameMode = 'not end';
 
 // // function to draw player
 const createPlayer = function (x, y, radius, color) {

@@ -21,6 +21,7 @@ export default function bindRoutes(app) {
   // returns score data to form leaderboard
   app.post('/score', gamestateController.score);
   app.get('/leaderboard', gamestateController.leaderboard);
+  app.get('/highscore', gamestateController.highscore);
 }
 // app.get('/game', (request, response) => {
 //   response.sendFile(resolve('dist', 'main.html'));
