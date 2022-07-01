@@ -6,6 +6,7 @@ import url from 'url';
 import allConfig from '../config/config.js';
 import initUserModel from './user.mjs';
 import initGameStateModel from './gamestate.mjs';
+import initSavedGameModel from './savedgame.mjs';
 
 const env = process.env.NODE_ENV || 'development';
 const config = allConfig[env];
@@ -36,11 +37,15 @@ else {
 // here we are putting initUserModel from user.mmjs into the object "db"
 db.User = initUserModel(sequelize, Sequelize.DataTypes);
 db.Gamestate = initGameStateModel(sequelize, Sequelize.DataTypes);
+db.Savedgame = initSavedGameModel(sequelize, Sequelize.DataTypes);
 
 // The following 2 lines enable Sequelize to recognise the 1-M relationship
 // between Item and Category models, providing the mixin association methods.
 db.Gamestate.belongsTo(db.User);
 db.User.hasMany(db.Gamestate);
+// Each user will only have one instance of saved game state
+db.Savedgame.belongsTo(db.User);
+db.User.hasOne(db.Savedgame);
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

@@ -42,10 +42,8 @@ export default function initUsersController(db) {
   // this function authenticates user's particulars in the database
   const login = async (request, response) => {
     request.isUserLoggedIn = false;
-    console.log('do you see this');
     console.log(request.body.username);
     console.log(request.body.password);
-    console.log('do you see this 2');
     const usernameInput = request.body.username;
     const passwordInput = request.body.password;
     const hashedUser = getHash(usernameInput);

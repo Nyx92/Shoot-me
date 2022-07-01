@@ -338,8 +338,37 @@ const restart = function () {
   modalScoreEl.innerHTML = 0;
 };
 
+const saveGame = function () {
+  const saveGameBtn = document.querySelector('#save-game-btn');
+  saveGameBtn.addEventListener('click', () => {
+    console.log('does this function run');
+    const enemiesConvertJson = enemies.map((x) => x);
+    console.log(enemiesConvertJson);
+    console.log('does this function run 2');
+    JSON.stringify(enemiesConvertJson);
+    console.log('does this function run 3');
+    console.log(enemiesConvertJson);
+    // once clicked, sends data back to table
+    const data = {
+    // data should contain
+      score: document.querySelector('#scoreEl').innerHTML,
+      enemies_pos: enemiesConvertJson, // GET ENEMIES ARRAY ############################
+    };
+    axios
+      .post('/savedgame', data)
+      .then((response) => {
+      })
+      .catch((error) => {
+      // handle error
+        console.log(error);
+      });
+  });
+};
+
 // main game
 const main = function () {
+  // save game button only works after start button is clicked
+  saveGame();
   // create player right in the middle of the canvas
   createPlayer(canvas.width / 2, canvas.height / 2, 10, 'white');
   // draw player/s
@@ -349,7 +378,6 @@ const main = function () {
   // add an event listener which triggers  projectiles via createProjectileFeature function
   window.addEventListener('click', (event) => {
     createProjectileFeature(event);
-    console.log(projectiles);
   });
   // set interval to create enemies
   setInterval(createEnemyFeature, 1000);

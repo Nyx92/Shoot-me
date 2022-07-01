@@ -89,12 +89,3 @@ export const highscoreCreator = function () {
       console.log(error);
     });
 };
-
-// export const saveGame = function () {
-//   const saveGameBtn = document.querySelector('#save-game-btn');
-//   saveGameBtn.addEventListener('click', () => {
-//     // once clicked, sends data back to table
-
-//       axios
-//         .get('/leaderboard')
-//         .then((response) => {

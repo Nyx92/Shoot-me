@@ -18,10 +18,14 @@ export default function bindRoutes(app) {
   app.post('/login', usersController.login);
   /// game route returns the Webpack-generated main.html file
   app.get('/game', usersController.game);
-  // returns score data to form leaderboard
+  // submits score data to form leaderboard
   app.post('/score', gamestateController.score);
+  // returns leaderboard data
   app.get('/leaderboard', gamestateController.leaderboard);
+  // returns player's highscore data
   app.get('/highscore', gamestateController.highscore);
+  // submits saved gamestate
+  // app.post('/savedgame', gamestateController.savedgame);
 }
 // app.get('/game', (request, response) => {
 //   response.sendFile(resolve('dist', 'main.html'));
