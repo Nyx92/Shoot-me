@@ -11,13 +11,16 @@ export default function initSavedGameModel(sequelize, DataTypes) {
       score: {
         type: DataTypes.INTEGER,
       },
-      userId: {
+      user_id: {
         type: DataTypes.INTEGER,
         // This links the userId column to the id column in the savedgame table
         references: {
           model: 'users',
           key: 'id',
         },
+      },
+      enemies_pos: {
+        type: DataTypes.STRING(99999),
       },
       createdAt: {
         allowNull: false,

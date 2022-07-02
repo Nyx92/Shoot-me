@@ -19,7 +19,7 @@ module.exports = {
         },
       },
       enemies_pos: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(99999),
       },
       created_at: {
         allowNull: false,
@@ -33,6 +33,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('gamestates');
+    await queryInterface.dropTable('savedgames');
   },
 };

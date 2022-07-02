@@ -25,7 +25,9 @@ export default function bindRoutes(app) {
   // returns player's highscore data
   app.get('/highscore', gamestateController.highscore);
   // submits saved gamestate
-  // app.post('/savedgame', gamestateController.savedgame);
+  app.post('/savedgame', gamestateController.savedgame);
+  // submits saved gamestate
+  app.get('/loadgame', gamestateController.loadgame);
 }
 // app.get('/game', (request, response) => {
 //   response.sendFile(resolve('dist', 'main.html'));

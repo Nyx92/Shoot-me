@@ -4,7 +4,10 @@ import { leaderboardCreator, highscoreCreator } from './server_side_features.js'
 // rules: {
 // 'max-classes-per-file': 'off',
 // }
+
+// add highscore function into the highscore button
 highscoreCreator();
+// add leaderboard function into the highscore button
 leaderboardCreator();
 // #### GLOBAL VARIABLES ####
 // canvas creation
@@ -30,7 +33,34 @@ const speedOfProjectiles = 4;
 const scoreEl = document.querySelector('#scoreEl');
 const modalScoreEl = document.querySelector('.total-score');
 const startGameBtn = document.querySelector('#startGamebtn');
+const loadGameBtn = document.querySelector('#loadGamebtn');
 let score = 0;
+
+class Enemy {
+  constructor(x, y, radius, color, velocity) {
+    this.x = x;
+    this.y = y;
+    this.radius = radius;
+    this.color = color;
+    this.velocity = velocity;
+  }
+
+  // function that draws each enemy as a circle in the canvas
+  draw() {
+    c.beginPath();
+    c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+    c.fillStyle = this.color;
+    c.fill();
+  }
+
+  // updates enemy with velocity
+  update() {
+    // to execute draw function of the enemy in the update function
+    this.draw();
+    this.x += this.velocity.x;
+    this.y += this.velocity.y;
+  }
+}
 
 // // function to draw player
 const createPlayer = function (x, y, radius, color) {
@@ -118,6 +148,31 @@ const createProjectileFeature = function (event) {
 
 // function to create enemy feature
 const createEnemyFeature = function () {
+  // set max and min radius of enemies
+  const maxEnemyRadius = 40;
+  const minEnemyRadius = 5;
+  const radius = Math.random() * (maxEnemyRadius - minEnemyRadius) + minEnemyRadius;
+  // x and y will store the value of where the enemy will spawn at
+  let x;
+  let y;
+
+  // randomly decides where the enemy spawns
+  // if less than .5, spawns left or right
+  if (Math.random() < 0.5) {
+    // spawns left or right
+    // if x < 0.5, x = 0 - radius else canvas.width + radius
+    x = Math.random() < 0.5 ? 0 - radius : canvas.width + radius;
+    y = Math.random() * canvas.height;
+    // else spawns top, down
+  } else {
+    x = Math.random() * canvas.width;
+    // spawns top or down
+    y = Math.random() < 0.5 ? 0 - radius : canvas.height + radius;
+  }
+
+  // color of enemy
+  const color = `hsl(${Math.random() * 360}, 50%, 50%)`;
+
   class Enemy {
     constructor(x, y, radius, color, velocity) {
       this.x = x;
@@ -143,31 +198,6 @@ const createEnemyFeature = function () {
       this.y += this.velocity.y;
     }
   }
-
-  // set max and min radius of enemies
-  const maxEnemyRadius = 40;
-  const minEnemyRadius = 5;
-  const radius = Math.random() * (maxEnemyRadius - minEnemyRadius) + minEnemyRadius;
-
-  // x and y will store the value of where the enemy will spawn at
-  let x;
-  let y;
-
-  // randomly decides where the enemy spawns
-  // if less than .5, spawns left or right
-  if (Math.random() < 0.5) {
-    // spawns left or right
-    // if x < 0.5, x = 0 - radius else canvas.width + radius
-    x = Math.random() < 0.5 ? 0 - radius : canvas.width + radius;
-    y = Math.random() * canvas.height;
-    // else spawns top, down
-  } else {
-    x = Math.random() * canvas.width;
-    // spawns top or down
-    y = Math.random() < 0.5 ? 0 - radius : canvas.height + radius;
-  }
-  // color of enemy
-  const color = `hsl(${Math.random() * 360}, 50%, 50%)`;
 
   // function to determine velocity for enemies
   const calcVelocityEnemies = function (y, x) {
@@ -341,18 +371,20 @@ const restart = function () {
 const saveGame = function () {
   const saveGameBtn = document.querySelector('#save-game-btn');
   saveGameBtn.addEventListener('click', () => {
-    console.log('does this function run');
     const enemiesConvertJson = enemies.map((x) => x);
-    console.log(enemiesConvertJson);
-    console.log('does this function run 2');
-    JSON.stringify(enemiesConvertJson);
-    console.log('does this function run 3');
-    console.log(enemiesConvertJson);
+
+    // finds and removes all _gsap keys because it causes a circular structure
+    enemiesConvertJson.forEach((x) => {
+      delete x._gsap;
+    });
+
+    const enemiesConvertedJson = JSON.stringify(enemiesConvertJson);
+
     // once clicked, sends data back to table
     const data = {
     // data should contain
       score: document.querySelector('#scoreEl').innerHTML,
-      enemies_pos: enemiesConvertJson, // GET ENEMIES ARRAY ############################
+      enemies_pos: enemiesConvertedJson, // GET ENEMIES ARRAY ############################
     };
     axios
       .post('/savedgame', data)
@@ -404,5 +436,34 @@ startGameBtn.addEventListener('click', () => {
       });
   }
   restart();
+  main();
+});
+
+loadGameBtn.addEventListener('click', () => {
+  document.querySelector('.modal').classList.add('remove-modal');
+  createEnemyFeature();
+  restart();
+  // calls saved game data from database
+  axios
+    .get('/loadgame')
+    .then((response) => {
+      // handle success
+      console.log(response);
+      // update score
+      console.log('HEY DOES THIS RUN');
+      const savedScore = response.data.savedGameData.score;
+      score = savedScore;
+      scoreEl.innerHTML = score;
+      // convert JSON data to Javascript
+      const convertSavedGameData = JSON.parse(response.data.savedGameData.enemies_pos);
+      // update the data into the class Enemy for it to use the update function
+      for (let i = 0; convertSavedGameData.length; i++) {
+        enemies.push(new Enemy(convertSavedGameData[i].x, convertSavedGameData[i].y, convertSavedGameData[i].radius, convertSavedGameData[i].color, convertSavedGameData[i].velocity));
+      }
+    })
+    .catch((error) => {
+      // handle error
+      console.log(error);
+    });
   main();
 });

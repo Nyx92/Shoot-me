@@ -55,6 +55,24 @@ module.exports = {
         created_at: new Date(),
         updated_at: new Date(),
       },
+      {
+        score: 1200,
+        user_id: 1,
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+      {
+        score: 1300,
+        user_id: 2,
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+      {
+        score: 1400,
+        user_id: 3,
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
     ];
 
     // Insert categories before items because items reference categories

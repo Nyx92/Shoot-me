@@ -11,7 +11,7 @@ export default function initGameStateModel(sequelize, DataTypes) {
       score: {
         type: DataTypes.INTEGER,
       },
-      userId: {
+      user_id: {
         type: DataTypes.INTEGER,
         // This links the userId column to the id column in the gamestates table
         references: {
