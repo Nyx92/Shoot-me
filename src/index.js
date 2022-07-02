@@ -1,13 +1,9 @@
 import './styles.scss';
 import { leaderboardCreator, highscoreCreator } from './server_side_features.js';
 
-// rules: {
-// 'max-classes-per-file': 'off',
-// }
-
-// add highscore function into the highscore button
+// add highscore functionality (i.e., retrieve player's highscore) into the highscore button
 highscoreCreator();
-// add leaderboard function into the highscore button
+// add leaderboard functionality (i.e., retrieve leaderboard) into the leaderboard button
 leaderboardCreator();
 // #### GLOBAL VARIABLES ####
 // canvas creation
@@ -36,6 +32,7 @@ const startGameBtn = document.querySelector('#startGamebtn');
 const loadGameBtn = document.querySelector('#loadGamebtn');
 let score = 0;
 
+// Enemy class as global variable, in order for loaded game data to access the class
 class Enemy {
   constructor(x, y, radius, color, velocity) {
     this.x = x;
@@ -62,7 +59,7 @@ class Enemy {
   }
 }
 
-// // function to draw player
+// function to draw player
 const createPlayer = function (x, y, radius, color) {
   class Player {
     constructor(x, y, radius, color) {
@@ -81,7 +78,7 @@ const createPlayer = function (x, y, radius, color) {
     }
 
     update() {
-      // to execute draw function of the enemy in the update function
+      // to execute draw function of the player in the update function
       this.draw();
     }
   }
@@ -368,6 +365,7 @@ const restart = function () {
   modalScoreEl.innerHTML = 0;
 };
 
+// add save game function to save game button
 const saveGame = function () {
   const saveGameBtn = document.querySelector('#save-game-btn');
   saveGameBtn.addEventListener('click', () => {
@@ -377,14 +375,13 @@ const saveGame = function () {
     enemiesConvertJson.forEach((x) => {
       delete x._gsap;
     });
-
+    // convert data in array so JSON to send to server
     const enemiesConvertedJson = JSON.stringify(enemiesConvertJson);
 
     // once clicked, sends data back to table
     const data = {
-    // data should contain
       score: document.querySelector('#scoreEl').innerHTML,
-      enemies_pos: enemiesConvertedJson, // GET ENEMIES ARRAY ############################
+      enemies_pos: enemiesConvertedJson,
     };
     axios
       .post('/savedgame', data)
@@ -416,8 +413,10 @@ const main = function () {
   animate();
 };
 
+// when start game button is clicked
 startGameBtn.addEventListener('click', () => {
   document.querySelector('.modal').classList.add('remove-modal');
+  // if score is not zero, sends the results back to database
   if (score !== 0) {
     const data = {
       finalScore: score,
@@ -435,13 +434,16 @@ startGameBtn.addEventListener('click', () => {
         console.log(error);
       });
   }
+  // clears the canvas, scores
   restart();
+  // starts the game
   main();
 });
 
+// when load game button is clicked
 loadGameBtn.addEventListener('click', () => {
   document.querySelector('.modal').classList.add('remove-modal');
-  createEnemyFeature();
+  // clears the canvas, scores
   restart();
   // calls saved game data from database
   axios
@@ -450,7 +452,6 @@ loadGameBtn.addEventListener('click', () => {
       // handle success
       console.log(response);
       // update score
-      console.log('HEY DOES THIS RUN');
       const savedScore = response.data.savedGameData.score;
       score = savedScore;
       scoreEl.innerHTML = score;
@@ -465,5 +466,6 @@ loadGameBtn.addEventListener('click', () => {
       // handle error
       console.log(error);
     });
+  // starts the game
   main();
 });

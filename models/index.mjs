@@ -40,7 +40,6 @@ db.Gamestate = initGameStateModel(sequelize, Sequelize.DataTypes);
 db.Savedgame = initSavedGameModel(sequelize, Sequelize.DataTypes);
 
 // The following 2 lines enable Sequelize to recognise the 1-M relationship
-// between Item and Category models, providing the mixin association methods.
 db.Gamestate.belongsTo(db.User);
 db.User.hasMany(db.Gamestate);
 // Each user will only have one instance of saved game state

@@ -1,3 +1,4 @@
+// this function calls highscore data and builds highscore table
 export const leaderboardCreator = function () {
   const leaderBoardBtn = document.querySelector('#leaderboardBtn');
   leaderBoardBtn.addEventListener('click', () => {
@@ -73,6 +74,7 @@ export const leaderboardCreator = function () {
   });
 };
 
+// this function calls player's highest score and display it on the canvas
 export const highscoreCreator = function () {
   axios
     .get('/highscore')

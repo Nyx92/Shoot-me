@@ -29,6 +29,3 @@ export default function bindRoutes(app) {
   // submits saved gamestate
   app.get('/loadgame', gamestateController.loadgame);
 }
-// app.get('/game', (request, response) => {
-//   response.sendFile(resolve('dist', 'main.html'));
-// });

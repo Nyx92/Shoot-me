@@ -9,8 +9,6 @@ export default function initGamestateController(db) {
       await db.Gamestate.create({
         score: request.body.finalScore,
         user_id: userIdCookie,
-        // created_at: new Date(),
-        // updated_at: new Date(),
       });
       response.send({ data: 'success' });
     } catch (error) {
@@ -53,21 +51,17 @@ export default function initGamestateController(db) {
   // this function stores saved gamestate in the database
   const savedgame = async (request, response) => {
     console.log(request.body);
-    console.log('saved score');
     const savedScore = request.body.score;
-    console.log('game state');
     const savedgameState = request.body.enemies_pos;
     const userIdCookie = request.cookies.userId;
-    console.log(savedScore);
-    console.log(savedgameState);
     try {
       const findUser = await db.Savedgame.findOne({
         where: {
           user_id: userIdCookie,
         },
       });
-      console.log('this is found user');
-      console.log(findUser);
+      // function will update if user is found, otherwise create an item in the table
+      // this way there will only be one save game instance per user
       if (findUser !== null) {
         console.log('updating');
         // find and replace
@@ -78,17 +72,14 @@ export default function initGamestateController(db) {
         // created_at: new Date(),
         // updated_at: new Date(),
         });
-        response.send({ data: 'success1' });
+        response.send({ data: 'update success' });
       } else {
-        console.log('creating');
         await db.Savedgame.create({
           score: savedScore,
           user_id: userIdCookie,
           enemies_pos: savedgameState,
-        // created_at: new Date(),
-        // updated_at: new Date(),
         });
-        response.send({ data: 'success2' });
+        response.send({ data: 'create success' });
       }
     } catch (error) {
       console.log(error);
@@ -97,7 +88,6 @@ export default function initGamestateController(db) {
 
   // this function calls the highscore data from the database
   const loadgame = async (request, response) => {
-    console.log('trying to load game?');
     const userIdCookie = request.cookies.userId;
     try {
       const savedGameData = await db.Savedgame.findOne({
